@@ -34,6 +34,10 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
+  # mailcatcher temp settings in development
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025, domain: '127.0.0.1' }
+
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
 

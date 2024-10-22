@@ -4,7 +4,7 @@
 
 Confirm have latest ruby and gems. Begin new Rails 8 app:
 
-`rails new rails8_template --css tailwind`
+`rails new rails8_template --css tailwindcss`
 
 ## Understand how to use UUID7 ids (even in sqlite)
 
@@ -38,6 +38,21 @@ end
 Create a test resource to put it all together:
 
 `rails g scaffold post title:string body:text published:boolean`
+
+If your CSS is plain text your Tailwind didn't install properly - if you specified rails new <app name> --css tailwind instead of tailwindcss for example.
+
+You can fix that in Rails 8 with:
+
+` ruby
+bundle add tailwindcss-rails
+bin/rails tailwindcss:install
+`
+
+And that's it. You can auto-rebuild css on changes with:
+
+`bin/rails tailwindcss:watch
+`
+
 
 Modify the migration file to disable native id key and instead point to the new UUID7 one:
 
@@ -145,6 +160,28 @@ And even test that its working in the console still with:
 `user.authenticate("securepassword")`
 
 On success it will show user details - otherwise it fails with 'false'.
+
+To setup local email for user tests do the following:
+`gem install mailcatcher`
+
+Then modify confic/environments/development.rb with:
+
+```ruby
+config.action_mailer.raise_delivery_errors = false
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = { address: '127.0.0.1', port: 1025, domain: '127.0.0.1' }
+```
+
+Then run `mailcatcher` to start the service - you can quit it in the web page.
+
+It serves smtp and http like so:
+
+```
+smtp://127.0.0.1:1025
+http://127.0.0.1:1080
+```
+
+MailCatcher runs as a daemon by default. Go to the web interface to quit.
 
 - SETUP MAILER (mailgun, etc.? or just mail test gem)
 - FINISH LOGIN AND NEW USER PAGES

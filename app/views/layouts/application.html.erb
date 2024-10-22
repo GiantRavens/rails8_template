@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title><% if content_for?(:page_title) %><%= appname %> | <%= yield(:page_title) %><% else %><%= appname %><% end %></title>
+  <title>
+    <% if content_for?(:page_title) %>
+    <%= appname %> | <%= yield(:page_title) %>
+    <% else %>
+    <%= appname %>
+    <% end %>
+  </title>
+
   <% if content_for?(:page_description) %>
-  <meta name="description" content="<%= yield(:page_description) %>" /><% end %>
+  <meta name="description" content="<%= yield(:page_description) %>" />
+  <% end %>
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <%= csrf_meta_tags %>
@@ -21,15 +32,38 @@
   <link rel="apple-touch-icon" href="/icon.png">
 
   <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
 </head>
 
-<body>
-  <main class="container mx-auto mt-28 px-5 flex">
+<body class="bg-gray-100 text-gray-900 leading-relaxed antialiased">
+  <header class="bg-white shadow-md fixed w-full top-0 left-0 z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-gray-800">
+        <%= appname %>
+      </h1>
+      <nav>
+        <ul class="flex space-x-4">
+          <li><%= link_to "Home",    root_path,    class: "text-gray-600 hover:text-blue-600" %></li>
+          <li><%= link_to "Welcome", welcome_path, class: "text-gray-600 hover:text-blue-600" %></li>
+          <li><%= link_to "About",   about_path,   class: "text-gray-600 hover:text-blue-600" %></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto mt-28 px-5">
     <%= yield %>
   </main>
+
+  <footer class="bg-gray-800 text-white py-4 mt-10">
+    <div class="container mx-auto text-center">
+      <p>&copy;<%= Time.now.year %> <%= appname %></p>
+    </div>
+  </footer>
 </body>
 
 </html>

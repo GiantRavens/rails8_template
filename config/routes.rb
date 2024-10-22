@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
-  resource :session
-  resources :passwords, param: :token
-  # get "pages/index"
-  # get "pages/welcome"
-  # get "pages/about"
   
   # use human readable urls>pages  
-  match '/about',   to: 'pages#about',   via: 'get'
-  match '/welcome', to: 'pages#welcome', via: 'get'
+  match  '/about',    to: 'pages#about',   via: 'get'
+  match  '/welcome',  to: 'pages#welcome', via: 'get'
+  get    '/login',    to: 'sessions#new'
+  post   '/login',    to: 'sessions#create'
+  delete '/logout',   to: 'sessions#destroy'
+
+  resource  :session
+  resources :passwords, param: :token
   
   # temporary only
   resources :posts
