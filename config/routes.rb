@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   delete '/logout',   to: 'sessions#destroy'
 
   resource  :session
+  resource  :registration, only: %i[new create]
   resources :passwords, param: :token
   
   # temporary only
